@@ -34,24 +34,14 @@ class ImagesCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         downloadProgressView.transform = downloadProgressView.transform.scaledBy(x: 1, y: 7)
         downloadedImage = UIImage(named: "placeholder") ?? UIImage()
-        ImageDownloader.sharedDownloader.delegate = self
     }
     
-    func configureCellWithImage(url:String) {
-        ImageDownloader.sharedDownloader.downloadImageFrom(url: url)
-    }
-}
-
-extension ImagesCollectionViewCell : ImageDownloaderDelegate {
-    func updateDownload(progress: Float) {
-        self.downloadProgress = progress
-    }
-    
-    func didDownload(image: Data) {
-        if let img = UIImage(data: image) {
-            downloadedImage = img
+    func configureCellWith(imageRecord:ImageRecord) {
+        mainImageView.contentMode = .scaleAspectFit
+        mainImageView.clipsToBounds = true
+        downloadProgress = imageRecord.progressValue
+        if let image = imageRecord.imageValue {
+            downloadedImage = image
         }
     }
-    
-    
 }

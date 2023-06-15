@@ -21,7 +21,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ise-hy-TkB">
                                 <rect key="frame" x="0.0" y="59" width="393" height="569.33333333333337"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="5" minimumInteritemSpacing="5" id="PPA-i1-PVv">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="PPA-i1-PVv">
                                     <size key="itemSize" width="195" height="290"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -138,6 +138,7 @@
                     </view>
                     <connections>
                         <outlet property="downloadButton" destination="sDv-Zv-7No" id="NM1-ZZ-vLP"/>
+                        <outlet property="mainCollectionView" destination="ise-hy-TkB" id="1IO-1i-m4y"/>
                         <outlet property="syncAsyncSelector" destination="dzA-ax-Meg" id="rdV-4Q-IYY"/>
                     </connections>
                 </viewController>

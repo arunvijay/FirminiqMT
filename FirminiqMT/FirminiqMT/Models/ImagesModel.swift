@@ -6,9 +6,21 @@
 //
 
 import Foundation
+import UIKit
 
 // MARK: - Images Model
 
 struct Images: Codable {
     let images: [String]
+}
+
+class ImageRecord {
+    var imageUrl: String
+    var imageDwonloaded: Bool = false
+    var imageValue: UIImage?
+    var progressValue: Float = 0.0
+    
+    init(imageUrl: String){
+        self.imageUrl = imageUrl
+    }
 }
