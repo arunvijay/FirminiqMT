@@ -36,37 +36,36 @@ class HomeViewVM {
         return imgRecords.count
     }
     
-    /// Fetch all images in asynchronous or synchronous
-    /// - Parameter isASyncDownloadEnabled: Flag to decide sync or async download to be perform..
+    /// Fetch all images asynchronous or synchronous
+    /// - Parameter isAsync: set this to true to download concurrently, false to download serially
     func fetchImages(isAsync: Bool){
         ImageDownloader.sharedDownloader.delegate = self
-        ImageDownloader.sharedDownloader.downloadImages(isASyncDownloadEnabled: isAsync, imageList: imgRecords)
+        ImageDownloader.sharedDownloader.downloadImages(isAsync: isAsync, imageList: imgRecords)
     }
     
-    /// Used to communicate between HomeViewController and APIManager for "Pause Download"
+    /// Exposed to view to send the pause action from the UI
     func pauseDownload(){
         ImageDownloader.sharedDownloader.pauseDownload()
     }
     
-    /// Used to communicate between HomeViewController and APIManager for "Resume Download"
+    /// Exposed to view to send the resume action from the UI
     func resumeDownload(){
         ImageDownloader.sharedDownloader.resumeDownload()
     }
     
-    /// Used to reset the datasource's downloaded images , when a new start download begins.
+    /// To reset the datasource's downloaded images , when a new start download begins.
     func resetDownloadedImages(){
         for (index, _) in self.imgRecords.enumerated() {
             self.imgRecords[index].imageValue = nil
             self.imgRecords[index].progressValue = 0.0
-            
         }
     }
 }
 
 extension HomeViewVM : ImageDownloaderDelegate {
-    /// Callback method from APIManager to perform download progres update
+    /// Callback method from ImageDownloader to update download progres.
     /// - Parameters:
-    ///   - progress: Percentage of downloading image
+    ///   - progress: Percentage of downloading completed
     ///   - requestedURL: Used to map the percentage againts correct object in datasource
     func updateDownload(progress: Float, requestedURL: URL) {
         if let row = self.imgRecords.firstIndex(where: {$0.imageUrl == requestedURL.absoluteString}) {
@@ -76,14 +75,14 @@ extension HomeViewVM : ImageDownloaderDelegate {
         
     }
     
-    /// Notifies all images downloaded completely
+    /// Invoked when all images downloaded completely
     func downloadCompleted() {
         self.delegate?.didDownloadAllImages()
     }
     
-    /// Notifies when an image downloaded completely
+    /// Invoked when an image download completed
     /// - Parameters:
-    ///   - downloadedImage: UImage downloaded
+    ///   - downloadedImage: Downloaded image as UIImage instance
     ///   - requestedURL: Used to map the percentage againts correct object in datasource
     func didDownload(image: UIImage, requestedURL: URL) {
         if let row = self.imgRecords.firstIndex(where: {$0.imageUrl == requestedURL.absoluteString}) {

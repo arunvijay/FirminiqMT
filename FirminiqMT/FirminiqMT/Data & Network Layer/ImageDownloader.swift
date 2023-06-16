@@ -22,26 +22,26 @@ class ImageDownloader : NSObject {
     var session : URLSession!
     var operation: DownloadOperation?
     
-    /// Handles the pause download, communicating to DownloadOperation
+    /// Call this to pause downlaod. This will redirect to pause method of DownloadOperation.
     func pauseDownload(){
         operation?.pause()
     }
     
     
-    /// Handles the resume download, communicating to DownloadOperation
+    /// Call this to resume download, This will redirect to resumeDownload method of DownloadOperation.
     func resumeDownload(){
         operation?.resumeDownload()
     }
     
     /// Initiate the imagedownloading
     /// - Parameters:
-    ///   - isASyncDownloadEnabled: Indicates whether the user selected Async  mode for downloading.
+    ///   - isAsync: Indicates whether the user selected Async  mode for downloading.
     ///   - imageList: Datasource with image objects whch contains images urls
-    func downloadImages(isASyncDownloadEnabled: Bool, imageList: [ImageRecord]){
+    func downloadImages(isAsync: Bool, imageList: [ImageRecord]){
         session = URLSession(configuration: URLSessionConfiguration.default, delegate: nil, delegateQueue: nil)
         queue = OperationQueue()
         queue.maxConcurrentOperationCount = 1
-        if isASyncDownloadEnabled {
+        if isAsync {
             queue.maxConcurrentOperationCount = 4
         }
         
