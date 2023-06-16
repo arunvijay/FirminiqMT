@@ -40,11 +40,11 @@
                                                     <color key="backgroundColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 </imageView>
                                                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="3pV-Of-XFW">
-                                                    <rect key="frame" x="8" y="268.33333333333331" width="179" height="2.6666666666666856"/>
+                                                    <rect key="frame" x="8" y="276.33333333333331" width="179" height="2.6666666666666856"/>
                                                     <color key="backgroundColor" red="0.97647058819999999" green="0.65098039220000004" blue="0.10980392160000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 </progressView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YKW-7H-KAH">
-                                                    <rect key="frame" x="97.666666666666671" y="233.33333333333334" width="0.0" height="25.000000000000028"/>
+                                                    <rect key="frame" x="97.666666666666671" y="241.33333333333334" width="0.0" height="25.000000000000028"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="OC7-VK-uNf"/>
                                                     </constraints>
@@ -61,7 +61,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="OC5-E9-OqM" secondAttribute="bottom" id="IIF-GC-cPw"/>
-                                                <constraint firstAttribute="bottom" secondItem="3pV-Of-XFW" secondAttribute="bottom" constant="20" symbolic="YES" id="OAP-HN-aiJ"/>
+                                                <constraint firstAttribute="bottom" secondItem="3pV-Of-XFW" secondAttribute="bottom" constant="12" id="OAP-HN-aiJ"/>
                                                 <constraint firstItem="3pV-Of-XFW" firstAttribute="leading" secondItem="Ql0-4K-Tfb" secondAttribute="leading" constant="8" id="PCk-1T-u3k"/>
                                                 <constraint firstItem="YKW-7H-KAH" firstAttribute="centerX" secondItem="Ql0-4K-Tfb" secondAttribute="centerX" id="RQf-19-fif"/>
                                                 <constraint firstAttribute="trailing" secondItem="3pV-Of-XFW" secondAttribute="trailing" constant="8" id="b5R-45-rnM"/>
@@ -89,10 +89,11 @@
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sDv-Zv-7No" customClass="MultiActionButton" customModule="FirminiqMT" customModuleProvider="target">
                                 <rect key="frame" x="96" y="669" width="201" height="50"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.11764705882352941" green="0.44313725490196076" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="bdv-Pn-sLw"/>
                                 </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Button">
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -108,7 +109,7 @@
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dzA-ax-Meg">
                                 <rect key="frame" x="45" y="742" width="303" height="51"/>
-                                <color key="backgroundColor" red="0.11820831519875735" green="0.44260976994293888" blue="0.50426988063365719" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.11764705882352941" green="0.44313725490196076" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="g5G-Sm-UIq"/>
                                 </constraints>

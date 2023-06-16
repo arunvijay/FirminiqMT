@@ -16,7 +16,7 @@ struct Images: Codable {
 
 class ImageRecord {
     var imageUrl: String
-    var imageDwonloaded: Bool = false
+    var hasImageDwonloaded: Bool = false
     var imageValue: UIImage?
     var progressValue: Float = 0.0
     

@@ -32,7 +32,9 @@ class ImagesCollectionViewCell: UICollectionViewCell {
     }
     
     override func awakeFromNib() {
-        downloadProgressView.transform = downloadProgressView.transform.scaledBy(x: 1, y: 7)
+        downloadProgressView.transform = downloadProgressView.transform.scaledBy(x: 1, y: 5)
+        downloadProgressView.layer.cornerRadius = 4
+        downloadProgressView.clipsToBounds = true
         downloadedImage = UIImage(named: "placeholder") ?? UIImage()
     }
     
@@ -40,8 +42,14 @@ class ImagesCollectionViewCell: UICollectionViewCell {
         mainImageView.contentMode = .scaleAspectFit
         mainImageView.clipsToBounds = true
         downloadProgress = imageRecord.progressValue
-        if let image = imageRecord.imageValue {
-            downloadedImage = image
+        if imageRecord.hasImageDwonloaded {
+            if let image = imageRecord.imageValue {
+                self.mainImageView.image = image
+            }
+            else { self.mainImageView.image = UIImage(named: "placeholder")! }
+        }
+        else {
+            self.mainImageView.image = UIImage(named: "placeholder")!
         }
     }
 }

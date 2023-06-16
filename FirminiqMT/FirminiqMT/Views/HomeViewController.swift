@@ -7,14 +7,12 @@
 
 import UIKit
 
-var isSerial = true
-
 class HomeViewController: UIViewController {
     
     @IBOutlet weak var downloadButton: MultiActionButton!
     @IBOutlet weak var syncAsyncSelector: UISegmentedControl!
     @IBOutlet weak var mainCollectionView: UICollectionView!
-    
+    var isSerial = true
     var downloadButtonTitle : String = "Start" {
         didSet {
             self.downloadButton.setTitle(downloadButtonTitle, for: .normal)
@@ -37,7 +35,7 @@ class HomeViewController: UIViewController {
         DispatchQueue.main.async { [self] in
             
             HomeViewVM.sharedVM.resetDownloadedImages()
-            reloadImageCV()
+//            reloadImageCV()
             self.syncAsyncSelector.isEnabled = false
             
             switch downloadButton.action {
@@ -46,16 +44,22 @@ class HomeViewController: UIViewController {
                     self.downloadButtonTitle = "Pause"
                     HomeViewVM.sharedVM.fetchImages(isAsync: !isSerial)
                 case .pause:
-                    self.downloadButton.action = .resume
-                    self.downloadButtonTitle = "Resume"
-                    HomeViewVM.sharedVM.pauseDownload()
+                    DispatchQueue.main.async {
+                        self.downloadButton.action = .resume
+                        self.downloadButtonTitle = "Resume"
+                        HomeViewVM.sharedVM.pauseDownload()
+                    }
                 case .resume:
-                    self.downloadButton.action = .pause
-                    self.downloadButtonTitle = "Pause"
-                    HomeViewVM.sharedVM.resumeDownload()
+                    DispatchQueue.main.async {
+                        self.downloadButton.action = .pause
+                        self.downloadButtonTitle = "Pause"
+                        HomeViewVM.sharedVM.resumeDownload()
+                    }
                 case .finished:
-                    self.downloadButton.action = .finished
-                    self.downloadButtonTitle = "Finished"
+                    DispatchQueue.main.async {
+                        self.downloadButton.action = .finished
+                        self.downloadButtonTitle = "Finished"
+                    }
             }
             
         }
@@ -71,7 +75,6 @@ class HomeViewController: UIViewController {
                 break
         }
     }
-    
 }
 
 extension HomeViewController : UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -83,11 +86,7 @@ extension HomeViewController : UICollectionViewDataSource, UICollectionViewDeleg
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagesCollectionViewCell", for: indexPath) as! ImagesCollectionViewCell
         let imgRec = collectionViewDataSource[indexPath.row]
-        cell.downloadProgress = imgRec.progressValue
-        if let image = imgRec.imageValue {
-            cell.downloadedImage = image
-        }
-//        cell.configureCellWith(imageRecord: collectionViewDataSource[indexPath.row])
+        cell.configureCellWith(imageRecord: imgRec)
         return cell
     }
     
@@ -99,11 +98,10 @@ extension HomeViewController : UICollectionViewDataSource, UICollectionViewDeleg
         
         return CGSize(width: width, height: height)
     }
-    
 }
 
 extension HomeViewController : HomeViewVMDelegate {
-    /// Reset the startDownloadButton title to "Finisj Download"  when all images downloaded Async  or Sync
+    /// Reset the startDownloadButton title to "Finished Download"  when all images are downloaded
     func didDownloadAllImages() {
         DispatchQueue.main.async {
             self.downloadButtonTitle = "Finished Download"

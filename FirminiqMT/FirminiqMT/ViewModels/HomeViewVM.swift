@@ -43,7 +43,6 @@ class HomeViewVM {
         ImageDownloader.sharedDownloader.downloadImages(isASyncDownloadEnabled: isAsync, imageList: imgRecords)
     }
     
-    
     /// Used to communicate between HomeViewController and APIManager for "Pause Download"
     func pauseDownload(){
         ImageDownloader.sharedDownloader.pauseDownload()
@@ -62,13 +61,6 @@ class HomeViewVM {
             
         }
     }
-    
-    
-//    func startDownload() {
-//        for item in imgRecords {
-//            ImageDownloader.sharedDownloader.downloadImageFrom(url: item.imageUrl)
-//        }
-//    }
 }
 
 extension HomeViewVM : ImageDownloaderDelegate {
@@ -81,6 +73,7 @@ extension HomeViewVM : ImageDownloaderDelegate {
             self.imgRecords[row].progressValue = progress
         }
         self.delegate?.reloadImageCV()
+        
     }
     
     /// Notifies all images downloaded completely
@@ -95,31 +88,8 @@ extension HomeViewVM : ImageDownloaderDelegate {
     func didDownload(image: UIImage, requestedURL: URL) {
         if let row = self.imgRecords.firstIndex(where: {$0.imageUrl == requestedURL.absoluteString}) {
             self.imgRecords[row].imageValue = image
+            self.imgRecords[row].hasImageDwonloaded = true
         }
         self.delegate?.reloadImageCV()
     }
-    
-    
-    
-    
-    /*
-    func updateDownload(progress: Float, requestedURL: URL) {
-        if let row = self.imgRecords.firstIndex(where: {$0.imageUrl == requestedURL.absoluteString}) {
-            self.imgRecords[row].progressValue = progress
-        }
-        self.delegate?.reloadImageCV()
-    }
-    
-    func didDownload(image: Data, requestedURL: URL) {
-        if let img = UIImage(data: image) {
-            if let row = self.imgRecords.firstIndex(where: {$0.imageUrl == requestedURL.absoluteString}) {
-                self.imgRecords[row].imageValue = img
-            }
-        }
-        else {
-            return
-        }
-        self.delegate?.reloadImageCV()
-    } */
-    
 }

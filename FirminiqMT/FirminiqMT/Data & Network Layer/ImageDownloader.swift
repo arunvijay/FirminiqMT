@@ -41,7 +41,7 @@ class ImageDownloader : NSObject {
         session = URLSession(configuration: URLSessionConfiguration.default, delegate: nil, delegateQueue: nil)
         queue = OperationQueue()
         queue.maxConcurrentOperationCount = 1
-        if isASyncDownloadEnabled == true{
+        if isASyncDownloadEnabled {
             queue.maxConcurrentOperationCount = 4
         }
         
@@ -58,33 +58,6 @@ class ImageDownloader : NSObject {
         }
         self.queue.addOperation(completionOperation)
     }
-    
-    /*
-    var downloadQueue: OperationQueue = {
-        var queue = OperationQueue()
-        queue.name = "Download queue"
-        queue.maxConcurrentOperationCount = isSerial ? 1 : HomeViewVM.sharedVM.getImageCount()
-        return queue
-      }()
-    
-    func downloadImageFrom(url: String) {
-        let operation = BlockOperation {
-            if let imgURL = URL(string: url) {
-                let config = URLSessionConfiguration.default
-                let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
-                session.downloadTask(with: URLRequest(url: imgURL)).resume()
-            }
-        }
-        downloadQueue.addOperation(operation)
-    }
-    
-    func pauseDownload() {
-        downloadQueue.isSuspended = true
-    }
-    
-    func resumeDownload() {
-        downloadQueue.isSuspended = false
-    }*/
 }
 
 extension ImageDownloader : DownloadOperationDelegate {
@@ -111,20 +84,4 @@ extension ImageDownloader : DownloadOperationDelegate {
             
         }
     }
-    
-    /*func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        do {
-            let imgData = try Data(contentsOf: location)
-            self.delegate?.didDownload(image: imgData, requestedURL: downloadTask.response!.url!)
-        }
-        catch {
-            print(error.localizedDescription)
-        }
-    }
-    
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-        
-        let progress = Float(totalBytesWritten)/Float(totalBytesExpectedToWrite)
-        self.delegate?.updateDownload(progress: progress, requestedURL: downloadTask.response!.url!)
-    }*/
 }

@@ -69,7 +69,11 @@ class DownloadOperation : Operation {
             return
         }
         
-//        self.task.delegate = self
+        if #available(iOS 15.0, *) {
+            self.task.delegate = self
+        } else {
+            // Fallback on earlier versions
+        }
         
         // set the state to executing
         state = .executing
@@ -110,14 +114,13 @@ class DownloadOperation : Operation {
 
 extension DownloadOperation: URLSessionTaskDelegate, URLSessionDownloadDelegate {
     
-    
     func urlSession(_ session: URLSession,
                     downloadTask: URLSessionDownloadTask,
                     didWriteData bytesWritten: Int64,
                     totalBytesWritten: Int64,
                     totalBytesExpectedToWrite: Int64) {
         
-        let totalDownloaded = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)/100
+        let totalDownloaded = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
         self.delegate?.updateDownload(progress: totalDownloaded, requestedURl: (downloadTask.response?.url!)!)
     }
     
