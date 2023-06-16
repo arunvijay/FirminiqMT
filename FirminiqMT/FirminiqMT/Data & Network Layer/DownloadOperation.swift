@@ -7,11 +7,10 @@
 
 import Foundation
 
-/// Protocol to support the data transition  between DownloadOperation and  ImageDownloader
+/// Protocol - Declares medthods to communicate download progress & downloaded image. Any class that want to get these updates can conform to this & implement the methods.
 protocol DownloadOperationDelegate: AnyObject {
     func updateDownload(progress: Float, requestedURl: URL)
     func didDownloadImage(lcoalURl: URL, requestedURL: URL)
-    
 }
 
 class DownloadOperation : Operation {
@@ -33,7 +32,6 @@ class DownloadOperation : Operation {
             self.willChangeValue(forKey: "isExecuting")
             self.willChangeValue(forKey: "isFinished")
         }
-        
         didSet {
             self.didChangeValue(forKey: "isExecuting")
             self.didChangeValue(forKey: "isFinished")
@@ -44,26 +42,17 @@ class DownloadOperation : Operation {
     override var isExecuting: Bool { return state == .executing }
     override var isFinished: Bool { return state == .finished }
     
-    
     init(session: URLSession, delegate: DownloadOperationDelegate?, downloadTaskURL: URL, completionHandler: ((URL?, URLResponse?, Error?) -> Void)?) {
-        
-        self.delegate = delegate
-        
         super.init()
-        // use weak self to prevent retain cycle
+        self.delegate = delegate
         
         //overwrite the session configuration to set delegate to DownloadOperation(self)
         self.session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
-        
         task = self.session.downloadTask(with: downloadTaskURL)
     }
     
     override func start() {
-        /*
-         if the operation or queue got cancelled even
-         before the operation has started, set the
-         operation state to finished and return
-         */
+        /// if the operation or queue got cancelled even before the operation has started, set the operation state to finished and return
         if(self.isCancelled) {
             state = .finished
             return
@@ -75,18 +64,14 @@ class DownloadOperation : Operation {
             // Fallback on earlier versions
         }
         
-        // set the state to executing
-        state = .executing
+        state = .executing /// set the state to executing
         
-        // start the downloading
-        self.task.resume()
+        self.task.resume() /// start the downloading
     }
     
     override func cancel() {
         super.cancel()
-        
-        // cancel the downloading
-        self.task.cancel()
+        self.task.cancel() /// cancel the downloading
     }
     
     /// Pause the image downloading.
