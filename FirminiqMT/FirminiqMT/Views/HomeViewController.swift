@@ -34,27 +34,30 @@ class HomeViewController: UIViewController {
     }
 
     @IBAction func downloadButtonAction(_ sender: Any) {
-        
-        HomeViewVM.sharedVM.resetDownloadedImages()
-        reloadImageCV()
-        self.syncAsyncSelector.isEnabled = false
-        
-        switch downloadButton.action {
-            case .start:
-                self.downloadButton.action = .pause
-                self.downloadButtonTitle = "Pause"
-                HomeViewVM.sharedVM.fetchImages(isAsync: !isSerial)
-            case .pause:
-                self.downloadButton.action = .resume
-                self.downloadButtonTitle = "Resume"
-                HomeViewVM.sharedVM.pauseDownload()
-            case .resume:
-                self.downloadButton.action = .pause
-                self.downloadButtonTitle = "Pause"
-                HomeViewVM.sharedVM.resumeDownload()
-            case .finished:
-                self.downloadButton.action = .finished
-                self.downloadButtonTitle = "Finished"
+        DispatchQueue.main.async { [self] in
+            
+            HomeViewVM.sharedVM.resetDownloadedImages()
+            reloadImageCV()
+            self.syncAsyncSelector.isEnabled = false
+            
+            switch downloadButton.action {
+                case .start:
+                    self.downloadButton.action = .pause
+                    self.downloadButtonTitle = "Pause"
+                    HomeViewVM.sharedVM.fetchImages(isAsync: !isSerial)
+                case .pause:
+                    self.downloadButton.action = .resume
+                    self.downloadButtonTitle = "Resume"
+                    HomeViewVM.sharedVM.pauseDownload()
+                case .resume:
+                    self.downloadButton.action = .pause
+                    self.downloadButtonTitle = "Pause"
+                    HomeViewVM.sharedVM.resumeDownload()
+                case .finished:
+                    self.downloadButton.action = .finished
+                    self.downloadButtonTitle = "Finished"
+            }
+            
         }
     }
     
@@ -79,7 +82,12 @@ extension HomeViewController : UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagesCollectionViewCell", for: indexPath) as! ImagesCollectionViewCell
-        cell.configureCellWith(imageRecord: collectionViewDataSource[indexPath.row])
+        let imgRec = collectionViewDataSource[indexPath.row]
+        cell.downloadProgress = imgRec.progressValue
+        if let image = imgRec.imageValue {
+            cell.downloadedImage = image
+        }
+//        cell.configureCellWith(imageRecord: collectionViewDataSource[indexPath.row])
         return cell
     }
     
