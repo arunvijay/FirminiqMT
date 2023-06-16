@@ -32,10 +32,6 @@ class HomeViewVM {
         return imgRecords
     }
     
-    func getImageCount() -> Int {
-        return imgRecords.count
-    }
-    
     /// Fetch all images asynchronous or synchronous
     /// - Parameter isAsync: set this to true to download concurrently, false to download serially
     func fetchImages(isAsync: Bool){

@@ -27,7 +27,6 @@ class ImageDownloader : NSObject {
         operation?.pause()
     }
     
-    
     /// Call this to resume download, This will redirect to resumeDownload method of DownloadOperation.
     func resumeDownload(){
         operation?.resumeDownload()
